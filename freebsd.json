@@ -1,0 +1,26 @@
+{
+  "builders": [{
+    "type": "vmware-iso",
+    "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/FreeBSD-10.1-RELEASE-amd64-disc1.iso",
+    "iso_checksum": "0c3d64ce48c3ef761761d0fea07e1935e296f8c045c249118bc91a7faf053a6b",
+    "iso_checksum_type": "sha256",
+    "ssh_username": "root",
+    "ssh_password": "vagrant",
+    "guest_os_type": "freebsd-64",
+    "boot_command": [
+      "<enter><wait10><wait10>s",
+      "mkdir /tmp/floppy<enter>",
+      "mount -t msdosfs /dev/fd0 /tmp/floppy<enter><wait5>",
+      "bsdinstall script /tmp/floppy/setup<enter>"
+    ],
+    "boot_wait": "3s",
+    "floppy_files": "install-scripts",
+    "shutdown_command": "poweroff"
+  }],
+  "_comment": "There's a race condition if we try to shutdown as soon as sshd comes up, so sleep before shutting down",
+  "provisioners": [{
+    "type": "shell",
+    "inline": ["sleep 10"],
+    "execute_command": "chmod +x {{ .Path }}; env {{ .Vars }} {{ .Path }}"
+  }]
+}

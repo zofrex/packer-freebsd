@@ -1,0 +1,8 @@
+PARTITIONS=da0
+cp /tmp/floppy/rcconf /tmp/bsdinstall_etc/rc.conf.template
+
+#!/bin/sh
+echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
+echo vagrant | pw mod user root -h 0
+echo 'autoboot_delay="1"' >> /boot/loader.conf
+shutdown -r now
