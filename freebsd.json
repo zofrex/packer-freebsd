@@ -1,4 +1,7 @@
 {
+  "variables": {
+    "http_proxy": "{{env `HOST_HTTP_PROXY`}}"
+  },
   "builders": [{
     "type": "vmware-iso",
     "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/FreeBSD-10.1-RELEASE-amd64-disc1.iso",
@@ -17,10 +20,27 @@
     "floppy_files": "install-scripts",
     "shutdown_command": "poweroff"
   }],
-  "_comment": "There's a race condition if we try to shutdown as soon as sshd comes up, so sleep before shutting down",
-  "provisioners": [{
-    "type": "shell",
-    "inline": ["sleep 10"],
-    "execute_command": "chmod +x {{ .Path }}; env {{ .Vars }} {{ .Path }}"
-  }]
+  "provisioners": [
+    {
+      "type": "shell-local",
+      "command": "./download-vagrant-key.sh"
+    },
+    {
+      "type": "file",
+      "source": "tmp/vagrant.pub",
+      "destination": "/tmp/vagrant.pub",
+      "pause_before": "10s"
+    },
+    {
+      "type": "shell",
+      "script": "postinstall.sh",
+      "execute_command": "chmod +x {{ .Path }}; env {{ .Vars }} {{ .Path }}",
+      "environment_vars": [
+        "HTTP_PROXY={{user `http_proxy`}}"
+      ]
+    }
+  ],
+  "post-processors": [
+    "vagrant"
+  ]
 }

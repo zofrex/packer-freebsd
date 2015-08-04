@@ -1,2 +1,4 @@
 output-vmware-iso
 packer_cache
+tmp
+*.box
