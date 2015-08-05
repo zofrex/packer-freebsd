@@ -6,6 +6,8 @@ BATCH=yes
 # Fetch the port tree
 portsnap --interactive fetch extract
 
+echo "security_sudo_SET += NOARGS_SHELL INSULTS" >> /etc/make.conf
+
 # Install sudo
 cd /usr/ports/security/sudo
 make install
