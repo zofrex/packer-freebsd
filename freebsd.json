@@ -11,12 +11,12 @@
     "ssh_password": "vagrant",
     "guest_os_type": "freebsd-64",
     "boot_command": [
-      "<enter><wait10><wait10>s",
+      "s",
       "mkdir /tmp/floppy<enter>",
       "mount -t msdosfs /dev/fd0 /tmp/floppy<enter><wait5>",
       "bsdinstall script /tmp/floppy/setup<enter>"
     ],
-    "boot_wait": "3s",
+    "boot_wait": "60s",
     "floppy_files": "install-scripts",
     "shutdown_command": "poweroff",
     "disk_additional_size": [10240, 10240]
@@ -38,9 +38,25 @@
     }
   ],
   "post-processors": [
-    {
-      "type": "vagrant",
-      "vagrantfile_template": "Vagrantfile"
-    }
-  ]
+    [
+      {
+        "type": "vagrant",
+        "vagrantfile_template": "Vagrantfile"
+      },
+      {
+        "type": "atlas",
+        "keep_input_artifact": true,
+        "artifact": "zofrex/freebsd",
+        "artifact_type": "vagrant.box",
+        "metadata": {
+          "provider": "vmware_desktop",
+          "version": "0.0.3"
+        }
+      }
+    ]
+  ],
+  "push": {
+    "name": "zofrex/freebsd",
+    "vcs": true
+  }
 }
