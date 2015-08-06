@@ -1,6 +1,6 @@
 {
   "variables": {
-    "http_proxy": "{{env `HOST_HTTP_PROXY`}}"
+    "host_http_proxy": "{{env `HOST_HTTP_PROXY`}}"
   },
   "builders": [{
     "type": "vmware-iso",
@@ -36,7 +36,7 @@
       "script": "postinstall.sh",
       "execute_command": "chmod +x {{ .Path }}; env {{ .Vars }} {{ .Path }}",
       "environment_vars": [
-        "HTTP_PROXY={{user `http_proxy`}}"
+        "HOST_HTTP_PROXY={{user `host_http_proxy`}}"
       ]
     }
   ],

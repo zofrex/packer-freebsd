@@ -1,5 +1,11 @@
 #!/bin/sh -e
 
+# If HOST_HTTP_PROXY is not an empty string, set HTTP_PROXY to its value
+if [ ! -z $HOST_HTTP_PROXY ]
+then
+  export HTTP_PROXY=$HOST_HTTP_PROXY
+fi
+
 # Don't spawn dialogs when installing ports
 BATCH=yes
 
