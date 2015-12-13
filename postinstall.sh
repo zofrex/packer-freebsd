@@ -6,6 +6,9 @@ then
   export HTTP_PROXY=$HOST_HTTP_PROXY
 fi
 
+freebsd-update fetch --not-running-from-cron
+freebsd-update install
+
 # Don't spawn dialogs when installing ports
 BATCH=yes
 
