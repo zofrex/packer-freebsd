@@ -9,17 +9,12 @@ fi
 freebsd-update fetch --not-running-from-cron
 freebsd-update install
 
-# Don't spawn dialogs when installing ports
-BATCH=yes
+echo "WITH_PKGNG=	yes" >> /etc/make.conf
 
-# Fetch the port tree
-portsnap --interactive fetch extract
-
-echo "security_sudo_SET += NOARGS_SHELL INSULTS" >> /etc/make.conf
+export ASSUME_ALWAYS_YES=yes
 
 # Install sudo
-cd /usr/ports/security/sudo
-make install
+pkg install sudo
 
 # Add vagrant user
 echo vagrant:::::::::vagrant | adduser -f -
