@@ -21,9 +21,15 @@ gpart add -t freebsd-ufs da2
 newfs -U /dev/da2p1
 mkdir -p /stor/data1
 
+gpart create -s GPT da3
+gpart add -t freebsd-ufs da3
+newfs -U /dev/da3p1
+mkdir -p /stor/data2
+
 cat >> /etc/fstab <<EOF
 /dev/da1p1	/stor/parity1	ufs	rw	0	2
 /dev/da2p1	/stor/data1	ufs	rw	0	2
+/dev/da3p1	/stor/data2	ufs	rw	0	2
 EOF
 
 reboot
