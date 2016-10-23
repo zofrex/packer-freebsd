@@ -1,5 +1,0 @@
-hostname="vagrant"
-ifconfig_em0="DHCP"
-ifconfig_em0_ipv6="inet6 accept_rtadv"
-sshd_enable="yes"
-dumpdev="AUTO"

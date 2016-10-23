@@ -1,7 +1,12 @@
 PARTITIONS=da0
-cp /tmp/floppy/rcconf /tmp/bsdinstall_etc/rc.conf.template
 
 #!/bin/sh
+echo 'hostname="vagrant"
+ifconfig_em0="DHCP"
+ifconfig_em0_ipv6="inet6 accept_rtadv"
+sshd_enable="yes"
+dumpdev="AUTO"' >> /etc/rc.conf
+
 echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
 echo vagrant | pw mod user root -h 0
 echo 'autoboot_delay="1"' >> /boot/loader.conf
