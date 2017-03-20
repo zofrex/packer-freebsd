@@ -6,6 +6,7 @@ add-box:
 
 proxy-start:
 	tmux new-session -d -s polipo polipo
+	@echo export HOST_HTTP_PROXY=$(shell ipconfig getifaddr en0):8123
 
 proxy-attach:
 	tmux attach-session -t polipo
