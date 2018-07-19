@@ -2,7 +2,7 @@ build:
 	packer build -on-error=ask freebsd.json
 
 add-box:
-	vagrant box add --force --name freebsd-10.2 packer_vmware-iso_vmware.box
+	vagrant box add --force --name freebsd-11.1-5disk packer_vmware-iso_vmware.box
 
 proxy-start:
 	tmux new-session -d -s polipo polipo
