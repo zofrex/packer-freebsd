@@ -4,8 +4,8 @@
   },
   "builders": [{
     "type": "vmware-iso",
-    "iso_url": "https://download.freebsd.org/ftp/releases/ISO-IMAGES/11.1/FreeBSD-11.1-RELEASE-amd64-disc1.iso",
-    "iso_checksum": "cd35b6b406724416c436ae5eb73943d8248e267aee608c0539a969ae79e0201e6590a9ad7550162fecfb21d577ff40edafbf934ab45fda61c8f3d2c30c1f1e05",
+    "iso_url": "https://download.freebsd.org/ftp/releases/ISO-IMAGES/11.2/FreeBSD-11.2-RELEASE-amd64-disc1.iso",
+    "iso_checksum": "3a98f0ad7ad4b9cd1e2f73b7cdc39be1e4ee009693d9a54aeb7f537aaee6ef66103c085a9759cd5c95d5b03681aef315436a4d26088e87cfbafa763f3ae71868",
     "iso_checksum_type": "sha512",
     "ssh_username": "root",
     "ssh_password": "vagrant",
