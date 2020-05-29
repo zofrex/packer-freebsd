@@ -19,6 +19,7 @@
     "boot_wait": "3s",
     "floppy_files": "install-scripts",
     "shutdown_command": "poweroff",
+    "disk_size": 100000,
     "disk_additional_size": [10240, 10240, 10240, 10240, 10240]
   }],
   "provisioners": [

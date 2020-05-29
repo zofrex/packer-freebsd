@@ -28,25 +28,14 @@ freebsd-update fetch --not-running-from-cron > /tmp/build-logs/freebsd-update.lo
 echo "Installing updates"
 freebsd-update install 2>&1 | tee -a /tmp/build-logs/freebsd-update.log
 
-# Don't spawn dialogs when installing ports
-BATCH=yes
-
-# Fetch the port tree
-echo "Updating ports tree"
-portsnap --interactive fetch extract > /tmp/build-logs/portsnap.log 2>&1
+# allow pkg to function without a TTY
+export ASSUME_ALWAYS_YES=yes
 
 echo "Installing sudo"
-
-echo "security_sudo_SET += NOARGS_SHELL INSULTS" >> /etc/make.conf
-cd /usr/ports/security/sudo
-echo "[$(/bin/date)] Installing $(pwd):" >> /var/log/ports
-make install > /var/log/ports 2>&1
+pkg install sudo
 
 echo "Installing rsync"
-
-cd /usr/ports/net/rsync
-echo "[$(/bin/date)] Installing $(pwd):" >> /var/log/ports
-make install > /var/log/ports 2>&1
+pkg install rsync
 
 # Add vagrant user
 echo "Adding vagrant user"
@@ -61,6 +50,7 @@ chown -R vagrant:vagrant ~vagrant/.ssh
 chmod go-r ~vagrant/.ssh/authorized_keys
 
 # Give vagrant sudoers access
+echo "Adding vagrant to sudoers"
 echo 'vagrant ALL=(ALL) NOPASSWD: ALL' >> /usr/local/etc/sudoers
 chmod u-w /usr/local/etc/sudoers
 
