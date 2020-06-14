@@ -15,11 +15,11 @@ set parity1 data1 data2 parity2 data3
 
 for i in $(seq 1 $#)
 do
-  gpart create -s GPT da$i
-  gpart add -t freebsd-ufs da$i
-  newfs -U /dev/da${i}p1 > /dev/null
+  gpart create -s GPT ada$i
+  gpart add -t freebsd-ufs ada$i
+  newfs -U /dev/ada${i}p1 > /dev/null
   mkdir -p /stor/$1
-  echo "/dev/da${i}p1	/stor/$1	ufs	rw	0	2" >> /etc/fstab
+  echo "/dev/ada${i}p1	/stor/$1	ufs	rw	0	2" >> /etc/fstab
   shift
 done
 

@@ -1,4 +1,4 @@
-PARTITIONS=da0
+PARTITIONS=ada0
 
 #!/bin/sh
 echo 'hostname="vagrant"

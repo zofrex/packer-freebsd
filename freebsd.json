@@ -3,24 +3,31 @@
     "host_http_proxy": "{{env `HOST_HTTP_PROXY`}}"
   },
   "builders": [{
-    "type": "vmware-iso",
-    "iso_url": "https://download.freebsd.org/ftp/releases/ISO-IMAGES/11.2/FreeBSD-11.2-RELEASE-amd64-disc1.iso",
-    "iso_checksum": "3a98f0ad7ad4b9cd1e2f73b7cdc39be1e4ee009693d9a54aeb7f537aaee6ef66103c085a9759cd5c95d5b03681aef315436a4d26088e87cfbafa763f3ae71868",
+    "type": "virtualbox-iso",
+    "iso_url": "https://download.freebsd.org/ftp/releases/ISO-IMAGES/12.1/FreeBSD-12.1-RELEASE-amd64-disc1.iso",
+    "iso_checksum": "61c03400402059c7784b65f1d55acaae841b3fa1b1c8970fada273188e022be2e1f4107393db9e75ea013b512e5eb3ebdded9ea981941d99148bbc7cb3afc57a",
     "iso_checksum_type": "sha512",
     "ssh_username": "root",
     "ssh_password": "vagrant",
     "guest_os_type": "freebsd-64",
     "boot_command": [
-      "<enter><wait10><wait10>s",
-      "mkdir /tmp/floppy<enter>",
-      "mount -t msdosfs /dev/fd0 /tmp/floppy<enter><wait5>",
-      "bsdinstall script /tmp/floppy/setup<enter>"
+      "<enter><wait10><wait2>s",
+      "dhclient em0 && ",
+      "fetch http://{{ .HTTPIP }}:{{ .HTTPPort }}/setup -o /tmp/setup && ",
+      "bsdinstall script /tmp/setup<enter>"
     ],
-    "boot_wait": "3s",
-    "floppy_files": "install-scripts",
+    "boot_wait": "8s",
+    "http_directory": "install-scripts",
     "shutdown_command": "poweroff",
     "disk_size": 100000,
-    "disk_additional_size": [10240, 10240, 10240, 10240, 10240]
+    "vboxmanage": [
+      ["storagectl", "{{.Name}}", "--name", "ACHI", "--add", "sata"],
+      ["storageattach", "{{.Name}}", "--storagectl", "ACHI", "--port", "0", "--type", "hdd", "--medium", "disk1.vdi"],
+      ["storageattach", "{{.Name}}", "--storagectl", "ACHI", "--port", "1", "--type", "hdd", "--medium", "disk2.vdi"],
+      ["storageattach", "{{.Name}}", "--storagectl", "ACHI", "--port", "2", "--type", "hdd", "--medium", "disk3.vdi"],
+      ["storageattach", "{{.Name}}", "--storagectl", "ACHI", "--port", "3", "--type", "hdd", "--medium", "disk4.vdi"],
+      ["storageattach", "{{.Name}}", "--storagectl", "ACHI", "--port", "4", "--type", "hdd", "--medium", "disk5.vdi"]
+    ]
   }],
   "provisioners": [
     {
